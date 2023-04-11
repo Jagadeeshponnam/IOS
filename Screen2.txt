@@ -1,0 +1,32 @@
+class SecondViewController: UIViewController {
+    @IBOutlet weak var bmiLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var bmiValue: Double = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bmiLabel.text = String(format: "%.2f", bmiValue)
+        
+        switch bmiValue {
+        case 0..<18.5:
+            imageView.image = UIImage(named: "underweight")
+        case 18.5..<25:
+            imageView.image = UIImage(named: "normal")
+        case 25..<30:
+            imageView.image = UIImage(named: "overweight")
+        default:
+            imageView.image = UIImage(named: "obese")
+        }
+        
+        // Animate the image view's layer
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 1
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        animation.fromValue = CGPoint(x: imageView.center.x - 10, y: imageView.center.y)
+        animation.toValue = CGPoint(x: imageView.center.x + 10, y: imageView.center.y)
+        imageView.layer.add(animation, forKey: "positionAnimation")
+    }
+}

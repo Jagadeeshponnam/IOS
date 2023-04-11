@@ -1,0 +1,22 @@
+class FirstViewController: UIViewController {
+    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var weightTextField: UITextField!
+    
+    var bmiValue: Double = 0
+    
+    @IBAction func calculateButtonTapped(_ sender: UIButton) {
+        guard let height = Double(heightTextField.text ?? ""),
+              let weight = Double(weightTextField.text ?? "") else {
+            return
+        }
+        
+        bmiValue = weight / (height * height)
+        performSegue(withIdentifier: "showSecondViewController", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let secondViewController = segue.destination as? SecondViewController {
+            secondViewController.bmiValue = bmiValue
+        }
+    }
+}
